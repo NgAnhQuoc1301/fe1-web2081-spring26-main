@@ -9,6 +9,15 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   title = 'my-app';
+  fullname = "Nguyễn Anh Quốc";
+  age = 22;
+  
+  // method function
+  sayHello(){
+  console.log('hello');
+}
 }
 export default App;
+
+ 
 
