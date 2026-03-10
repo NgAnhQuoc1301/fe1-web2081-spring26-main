@@ -10,3 +10,5 @@ import { RouterOutlet } from '@angular/router';
 export class App {
   title = 'my-app';
 }
+export default App;
+
