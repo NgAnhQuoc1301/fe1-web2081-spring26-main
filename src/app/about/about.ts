@@ -16,3 +16,5 @@ export class About {
     alert('Bạn đã click button');
   }
 }
+
+export default About;
