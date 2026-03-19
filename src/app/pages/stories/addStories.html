@@ -1,0 +1,125 @@
+<div class="container">
+  <!-- Tabs Navigation -->
+  <div class="tabs">
+    <button [class.active]="activeTab === 'story'" (click)="activeTab = 'story'" class="tab-btn">Thêm Truyện</button>
+    <button [class.active]="activeTab === 'product'" (click)="activeTab = 'product'" class="tab-btn">Tạo Sản Phẩm</button>
+    <button [class.active]="activeTab === 'register'" (click)="activeTab = 'register'" class="tab-btn">Đăng Ký Tài Khoản</button>
+  </div>
+
+  <!-- Tab 1: Thêm Truyện (Original) -->
+  @if(activeTab === 'story'){
+  <div class="tab-content">
+    <h2>Thêm truyện tranh</h2>
+    <form [formGroup]="addForm" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label>Tên truyện</label>
+        <input type="text" formControlName="title" />
+        @if (title?.invalid && title?.touched) {
+        <p class="error">Tên truyện phải ít nhất 3 ký tự</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Tác giả</label>
+        <input type="text" formControlName="author" />
+      </div>
+
+      <div class="form-group">
+        <label>Lượt xem</label>
+        <input type="number" formControlName="view" />
+      </div>
+
+      <button type="submit" [disabled]="addForm.invalid">Thêm truyện</button>
+    </form>
+  </div>
+  }
+
+  <!-- Tab 2: Tạo Sản Phẩm (Task 1) -->
+  @if(activeTab === 'product'){
+  <div class="tab-content">
+    <h2>Tạo thêm sản phẩm</h2>
+    <form [formGroup]="productForm" (ngSubmit)="submitProduct()">
+      <div class="form-group">
+        <label>Tên sản phẩm</label>
+        <input type="text" formControlName="name" placeholder="Nhập tên sản phẩm" />
+        @if (productName?.invalid && productName?.touched) {
+        <p class="error">Tên sản phẩm bắt buộc</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Giá</label>
+        <input type="number" formControlName="price" placeholder="Nhập giá" />
+        @if (productPrice?.invalid && productPrice?.touched) {
+          @if (productPrice?.hasError('required')) {
+          <p class="error">Giá bắt buộc</p>
+          }
+          @if (productPrice?.hasError('min')) {
+          <p class="error">Giá phải lớn hơn 0</p>
+          }
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Loại sản phẩm</label>
+        <select formControlName="type">
+          <option value="">-- Chọn loại --</option>
+          <option value="electronics">Điện tử</option>
+          <option value="clothing">Quần áo</option>
+          <option value="food">Thực phẩm</option>
+          <option value="books">Sách</option>
+        </select>
+        @if (productType?.invalid && productType?.touched) {
+        <p class="error">Loại sản phẩm bắt buộc</p>
+        }
+      </div>
+
+      <button type="submit" [disabled]="productForm.invalid">Tạo sản phẩm</button>
+    </form>
+  </div>
+  }
+
+  <!-- Tab 3: Đăng Ký Tài Khoản (Task 2) -->
+  @if(activeTab === 'register'){
+  <div class="tab-content">
+    <h2>Đăng ký tài khoản</h2>
+    <form [formGroup]="registrationForm" (ngSubmit)="submitRegistration()">
+      <div class="form-group">
+        <label>Tên người dùng</label>
+        <input type="text" formControlName="username" placeholder="Nhập tên người dùng" />
+        @if (username?.invalid && username?.touched) {
+        <p class="error">Tên người dùng bắt buộc</p>
+        }
+      </div>
+
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" formControlName="email" placeholder="Nhập email" />
+        @if (email?.invalid && email?.touched) {
+          @if (email?.hasError('required')) {
+          <p class="error">Email bắt buộc</p>
+          }
+          @if (email?.hasError('email')) {
+          <p class="error">Email không hợp lệ</p>
+          }
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Mật khẩu</label>
+        <input type="password" formControlName="password" placeholder="Nhập mật khẩu" />
+        @if (password?.invalid && password?.touched) {
+          @if (password?.hasError('required')) {
+          <p class="error">Mật khẩu bắt buộc</p>
+          }
+          @if (password?.hasError('minlength')) {
+          <p class="error">Mật khẩu phải ít nhất 6 ký tự</p>
+          }
+        }
+      </div>
+
+      <button type="submit" [disabled]="registrationForm.invalid">Đăng ký</button>
+    </form>
+  </div>
+  }
+</div>

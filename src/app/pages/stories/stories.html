@@ -1,6 +1,11 @@
 <div class="max-w-6xl mx-auto mt-10 px-4">
   <h1 class="text-4xl font-bold mb-6">Danh sách truyện tranh</h1>
 
+  <!-- Component thêm truyện/sản phẩm/đăng ký -->
+  <app-add-story></app-add-story>
+  
+  <hr class="my-8">
+
   @if (stories.length === 0) {
     <p class="text-xl text-gray-600">Không có truyện nào</p>
   } @else {
