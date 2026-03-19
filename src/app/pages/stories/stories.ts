@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { AddStories } from './addStories';
+import { Lab5Component } from './lab5/lab5.component';
 
 @Component({
   selector: 'app-stories',
-  imports: [AddStories],
+  imports: [AddStories, Lab5Component],
   templateUrl: './stories.html',
   styleUrl: './stories.css',
 })

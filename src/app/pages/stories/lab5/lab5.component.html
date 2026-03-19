@@ -1,0 +1,176 @@
+<div class="container">
+  <h1>Lab 5 - Forms & API Service</h1>
+
+  <!-- Tabs Navigation -->
+  <div class="tabs">
+    <button [class.active]="activeTab === 'story'" (click)="activeTab = 'story'" class="tab-btn">
+      Bài 1: Thêm Truyện
+    </button>
+    <button [class.active]="activeTab === 'product'" (click)="activeTab = 'product'" class="tab-btn">
+      Bài 2: Thêm Sản Phẩm
+    </button>
+  </div>
+
+  <!-- Bài 1: Thêm Truyện -->
+  @if(activeTab === 'story'){
+  <div class="tab-content">
+    <h2>Bài 1: Thêm Truyện Tranh</h2>
+    <p class="subtitle">Yêu cầu xác thực tiêu đề (tối thiểu 3 ký tự)</p>
+
+    <!-- Bài 3: Hiển thị lỗi -->
+    @if(errorStory) {
+    <div class="alert alert-error">
+      <strong>❌ Lỗi:</strong> {{ errorStory }}
+    </div>
+    }
+
+    <!-- Bài 3: Hiển thị thành công -->
+    @if(successStory) {
+    <div class="alert alert-success">
+      <strong>✅ Thành công:</strong> {{ successStory }}
+    </div>
+    }
+
+    <form [formGroup]="storyForm" (ngSubmit)="submitStory()">
+      <!-- Bài 1: Field Tiêu đề (Bắt buộc) -->
+      <div class="form-group">
+        <label>Tiêu đề <span class="required">*</span></label>
+        <input 
+          type="text" 
+          formControlName="title" 
+          placeholder="Nhập tiêu đề truyện (tối thiểu 3 ký tự)"
+          [class.input-error]="title?.invalid && title?.touched"
+        />
+        @if (title?.invalid && title?.touched) {
+          @if (title?.hasError('required')) {
+          <p class="error">Tiêu đề bắt buộc</p>
+          }
+          @if (title?.hasError('minlength')) {
+          <p class="error">Tiêu đề phải ít nhất 3 ký tự</p>
+          }
+        }
+      </div>
+
+      <!-- Bài 1: Field Tác giả -->
+      <div class="form-group">
+        <label>Tác giả <span class="required">*</span></label>
+        <input 
+          type="text" 
+          formControlName="author" 
+          placeholder="Nhập tên tác giả"
+          [class.input-error]="author?.invalid && author?.touched"
+        />
+        @if (author?.invalid && author?.touched) {
+        <p class="error">Tác giả bắt buộc</p>
+        }
+      </div>
+
+      <!-- Bài 1: Field Lượt xem -->
+      <div class="form-group">
+        <label>Lượt xem <span class="required">*</span></label>
+        <input 
+          type="number" 
+          formControlName="views" 
+          placeholder="Nhập số lượt xem"
+          [class.input-error]="views?.invalid && views?.touched"
+        />
+        @if (views?.invalid && views?.touched) {
+          @if (views?.hasError('required')) {
+          <p class="error">Lượt xem bắt buộc</p>
+          }
+          @if (views?.hasError('min')) {
+          <p class="error">Lượt xem không thể âm</p>
+          }
+        }
+      </div>
+
+      <!-- Bài 3: Button với loading state -->
+      <button 
+        type="submit" 
+        [disabled]="storyForm.invalid || loadingStory"
+        class="submit-btn"
+      >
+        @if(loadingStory) {
+          <span class="spinner"></span> Đang tải...
+        } @else {
+          ➕ Thêm Truyện
+        }
+      </button>
+    </form>
+  </div>
+  }
+
+  <!-- Bài 2: Thêm Sản Phẩm -->
+  @if(activeTab === 'product'){
+  <div class="tab-content">
+    <h2>Bài 2: Thêm Sản Phẩm</h2>
+    <p class="subtitle">Gọi API POST để thêm sản phẩm</p>
+
+    <!-- Bài 3: Hiển thị lỗi -->
+    @if(errorProduct) {
+    <div class="alert alert-error">
+      <strong>❌ Lỗi:</strong> {{ errorProduct }}
+    </div>
+    }
+
+    <!-- Bài 3: Hiển thị thành công -->
+    @if(successProduct) {
+    <div class="alert alert-success">
+      <strong>✅ Thành công:</strong> {{ successProduct }}
+    </div>
+    }
+
+    <!-- Bài 2: Form thêm sản phẩm -->
+    <form [formGroup]="productForm" (ngSubmit)="submitProduct()">
+      <div class="form-group">
+        <label>Tên sản phẩm <span class="required">*</span></label>
+        <input 
+          type="text" 
+          formControlName="name" 
+          placeholder="Nhập tên sản phẩm"
+          [class.input-error]="productName?.invalid && productName?.touched"
+        />
+        @if (productName?.invalid && productName?.touched) {
+          @if (productName?.hasError('required')) {
+          <p class="error">Tên sản phẩm bắt buộc</p>
+          }
+          @if (productName?.hasError('minlength')) {
+          <p class="error">Tên phải ít nhất 2 ký tự</p>
+          }
+        }
+      </div>
+
+      <div class="form-group">
+        <label>Giá <span class="required">*</span></label>
+        <input 
+          type="number" 
+          formControlName="price" 
+          placeholder="Nhập giá sản phẩm"
+          [class.input-error]="productPrice?.invalid && productPrice?.touched"
+        />
+        @if (productPrice?.invalid && productPrice?.touched) {
+          @if (productPrice?.hasError('required')) {
+          <p class="error">Giá bắt buộc</p>
+          }
+          @if (productPrice?.hasError('min')) {
+          <p class="error">Giá phải lớn hơn 0</p>
+          }
+        }
+      </div>
+
+      <!-- Bài 3: Button với loading state -->
+      <button 
+        type="submit" 
+        [disabled]="productForm.invalid || loadingProduct"
+        class="submit-btn"
+      >
+        @if(loadingProduct) {
+          <span class="spinner"></span> Đang tải...
+        } @else {
+          ➕ Thêm Sản Phẩm
+        }
+      </button>
+    </form>
+  </div>
+  }
+</div>
