@@ -1,1 +1,29 @@
-{}
+{
+  "stories": [
+    {
+      "id": "1",
+      "name": "The Midnight Mystery",
+      "author": "John Smith",
+      "views": 1250
+    },
+    {
+      "id": "2",
+      "name": "Love in the City",
+      "author": "Sarah Johnson",
+      "views": 980
+    },
+    {
+      "id": "3",
+      "name": "Adventure Beyond Mountains",
+      "author": "Michael Chen",
+      "views": 2145
+    },
+    {
+      "id": "4",
+      "name": "The Last Knight's Legacy",
+      "author": "Emma Davis",
+      "views": 1680
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
